@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:m="http://mayaa.seasar.org" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>標準テンプレート（PC）</title>
+</head>
+<body m:id='CONTENT'>
+  <script>
+  window.BrandList = [
+  <? var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('brand_data');
+     var category_sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('category_data');
+     var brandCount = sheet.getLastRow() - 1;
+     var categoryCount = 5;
+     var data = sheet.getRange(2,1,brandCount,categoryCount).getValues();
+     var category_data = category_sheet.getRange(2,2,brandCount,categoryCount).getValues();
+     
+     for(i = 0; i < brandCount; i++) { ?>
+      {
+        name: <?= data[i][0] ?>,
+        kana: <?= data[i][1] ?>,
+        ebisu_category_cd: <?= data[i][2] ?>,
+        image_name: <?= data[i][3] ?>,
+        categories: ['0',<? for(j = 0; j < categoryCount; j++) {
+        Logger.log(j);
+        if ( category_data[i][j] === '◯') { ?><?= j+1 ?>,<? } } ?>]
+      },
+ <? } ?>
+  ];
+  </script>
+
+</body>
+</html>
+
+
